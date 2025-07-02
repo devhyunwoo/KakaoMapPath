@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
             KakaoMapPathTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Androi11d",
+                        name = "Andro2i11d",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
