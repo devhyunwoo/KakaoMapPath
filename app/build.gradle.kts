@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.google.dagger.hilt)
+    alias(libs.plugins.serialization)
 }
 
 android {
@@ -67,4 +68,13 @@ dependencies {
     implementation(libs.squareup.retrofit)
     implementation(libs.squareup.retrofit.converter.gson)
     implementation(libs.squareup.okhttp.logging.interceptor)
+
+    // serialization
+    implementation(libs.serialization)
+
+    // compose-navigation
+    implementation(libs.androidx.compose.navigation)
+
+    // hilt navigation compose
+    implementation(libs.hilt.navigation.compose)
 }
