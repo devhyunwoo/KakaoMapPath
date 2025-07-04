@@ -1,4 +1,4 @@
-package com.example.kakaomappath.ui.screen
+package com.example.kakaomappath.ui.screen.main
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
@@ -9,19 +9,25 @@ import com.example.kakaomappath.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val mapRepository: MapRepository
-) : BaseViewModel<MainContract.State>(
+) : BaseViewModel<MainContract.State, MainContract.Event>(
     initialState = MainContract.State(
         isLoading = false,
         locations = emptyList(),
         errorData = null
     )
 ) {
+    private val _effect: MutableSharedFlow<MainContract.Effect> = MutableSharedFlow()
+    val effect: SharedFlow<MainContract.Effect> = _effect.asSharedFlow()
+
     init {
         getCodingAssignmentLocations()
     }
@@ -42,4 +48,21 @@ class MainViewModel @Inject constructor(
             }
         }
     }
+
+    override fun requestAction(event: MainContract.Event) {
+        when (event) {
+            is MainContract.Event.OnClickItem -> {
+                viewModelScope.launch {
+                    _effect.emit(
+                        MainContract.Effect.NavigateToMap(
+                            origin = event.origin,
+                            destination = event.destination
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+
 }

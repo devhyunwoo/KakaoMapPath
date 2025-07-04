@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-abstract class BaseViewModel<US>(
+abstract class BaseViewModel<US, UE>(
     initialState: US
 ) : ViewModel() {
     private val _state : MutableStateFlow<US> = MutableStateFlow(initialState)
@@ -18,4 +18,6 @@ abstract class BaseViewModel<US>(
         val copy = reducer(state.value)
         _state.update { copy}
     }
+
+    protected abstract fun requestAction(event : UE)
 }
