@@ -15,7 +15,7 @@ fun MapContent(
     mapView: MapView,
     onMapDestroy: () -> Unit,
     onMapError: (Exception?) -> Unit,
-    onMapReady: (KakaoMap) -> Unit
+    onMapReady: (KakaoMap) -> Unit,
 ) {
     AndroidView(
         modifier = modifier.fillMaxSize(),

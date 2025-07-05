@@ -9,9 +9,6 @@ sealed class MapContract {
         // 로딩 중이면 true, 아니면 false
         val isLoading: Boolean,
 
-        // 경로 정보랑 트래픽 정보
-        val routes: List<Pair<List<LatLng>, TrafficState>>,
-
         // 시간 (몇분 몇초로 맵핑)
         val time: String,
 

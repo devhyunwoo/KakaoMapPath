@@ -24,7 +24,6 @@ class MapViewModel @Inject constructor(
 ) : BaseViewModel<MapContract.State, MapContract.Event>(
     initialState = MapContract.State(
         isLoading = false,
-        routes = emptyList(),
         time = "",
         distance = "",
         getRoutesErrorData = ApiResult.Error(),
@@ -42,7 +41,10 @@ class MapViewModel @Inject constructor(
             )
         }) {
             is ApiResult.Success -> {
-                updateState { copy(routes = result.data.map { it.points.toMapLatLng() to it.trafficState }) }
+                _effect.emit(
+                    value = MapContract.Effect.DrawRoutes(
+                        routes = result.data.map { it.points.toMapLatLng() to it.trafficState })
+                )
             }
 
             is ApiResult.Error -> {
@@ -133,7 +135,7 @@ class MapViewModel @Inject constructor(
         return this.split(" ")
             .map { latLng ->
                 val parts = latLng.split(",")
-                LatLng.from(parts[0].toDouble(), parts[1].toDouble())
+                LatLng.from(parts[1].toDouble(), parts[0].toDouble())
             }
     }
 }
