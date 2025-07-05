@@ -49,6 +49,14 @@ fun MainScreen(
         MainContent(
             modifier = Modifier.padding(paddingValues),
             locations = state.locations,
+            onClickItem = { origin, destination ->
+                viewModel.requestAction(
+                    event = MainContract.Event.OnClickItem(
+                        origin = origin,
+                        destination = destination
+                    )
+                )
+            }
         )
     }
 }

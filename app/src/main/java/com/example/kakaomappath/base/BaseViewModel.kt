@@ -19,5 +19,5 @@ abstract class BaseViewModel<US, UE>(
         _state.update { copy}
     }
 
-    protected abstract fun requestAction(event : UE)
+    abstract fun requestAction(event : UE)
 }

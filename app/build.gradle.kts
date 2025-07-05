@@ -77,4 +77,10 @@ dependencies {
 
     // hilt navigation compose
     implementation(libs.hilt.navigation.compose)
+
+    // kakao map
+    implementation(libs.kakao.map)
+
+    // retrofit serialization converter
+    implementation(libs.retrofit.serialization.converter)
 }

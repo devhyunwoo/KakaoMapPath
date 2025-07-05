@@ -35,7 +35,8 @@ class MainViewModel @Inject constructor(
     private fun getCodingAssignmentLocations() {
         updateState { copy(isLoading = true) }
         viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
-            Log.d(TAG, "getCodingAssignmentLocations: throwable: ${throwable.message}")
+            Log.e(TAG, "getCodingAssignmentLocations: throwable: ${throwable.message}")
+            updateState { copy(isLoading = false, errorData = ApiResult.Error(errorMsg = throwable.message)) }
         }) {
             when (val result = safeApiCall { mapRepository.getCodingAssignmentLocations() }) {
                 is ApiResult.Success -> {

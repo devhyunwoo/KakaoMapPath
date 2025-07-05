@@ -23,11 +23,11 @@ suspend fun <T> safeApiCall(
     }
 }
 
-sealed class ApiResult<T> {
+sealed class ApiResult<out T> {
     data class Success<T>(val data: T) : ApiResult<T>()
-    data class Error<T>(
+    data class Error(
         val code: Int? = null,
         val errorMsg: String? = null,
         val apiName: String? = null
-    ) : ApiResult<T>()
+    ) : ApiResult<Nothing>()
 }

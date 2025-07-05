@@ -2,6 +2,7 @@ package com.example.kakaomappath.ui.screen.main.composable
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,7 +27,11 @@ import com.example.kakaomappath.AppColors
 import com.example.kakaomappath.api.map.remote.model.Location
 
 @Composable
-fun MainContent(modifier: Modifier = Modifier, locations: List<Location>) {
+fun MainContent(
+    modifier: Modifier = Modifier,
+    locations: List<Location>,
+    onClickItem: (String, String) -> Unit
+) {
     LazyColumn(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -36,17 +41,20 @@ fun MainContent(modifier: Modifier = Modifier, locations: List<Location>) {
             items = locations,
             key = { index, _ -> index }
         ) { _, location ->
-            LocationItem(location = location)
+            LocationItem(location = location, onClickItem = onClickItem)
         }
     }
 }
 
 @Composable
-fun LocationItem(location: Location) {
+fun LocationItem(location: Location, onClickItem: (String, String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp),
+            .padding(horizontal = 20.dp)
+            .clickable {
+                onClickItem(location.origin, location.destination)
+            },
         elevation = CardDefaults.cardElevation(4.dp),
         border = BorderStroke(width = 1.dp, color = AppColors.OrangeLight)
     ) {
@@ -116,14 +124,16 @@ fun PreviewMainContent() {
         Location(origin = "서울시 마포구 상수동", destination = "서울시 용산구 이태원동"),
         Location(origin = "서울시 종로구 관철동", destination = "서울시 중구 명동")
     )
-    MainContent(locations = sampleLocations)
+    MainContent(
+        locations = sampleLocations,
+        onClickItem = { _, _ -> })
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewLocationItem() {
     val sampleLocation = Location(origin = "서울시 강남구 역삼동", destination = "서울시 서초구 서초동")
-    LocationItem(location = sampleLocation)
+    LocationItem(location = sampleLocation, onClickItem = { _, _ -> })
 }
 
 @Preview(showBackground = true)

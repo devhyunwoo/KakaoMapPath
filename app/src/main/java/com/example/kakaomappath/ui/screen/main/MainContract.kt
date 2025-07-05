@@ -1,7 +1,6 @@
 package com.example.kakaomappath.ui.screen.main
 
 import com.example.kakaomappath.api.common.ApiResult
-import com.example.kakaomappath.api.map.remote.model.GetCodingAssignmentLocationsResponse
 import com.example.kakaomappath.api.map.remote.model.Location
 
 sealed class MainContract {
@@ -13,7 +12,7 @@ sealed class MainContract {
         val locations: List<Location>,
 
         // 에러 발생시
-        val errorData: ApiResult.Error<GetCodingAssignmentLocationsResponse>?
+        val errorData: ApiResult.Error?
     )
 
     sealed class Event {
